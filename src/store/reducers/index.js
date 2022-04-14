@@ -1,6 +1,6 @@
 // reducer is a function that accepts state and action as a parameters and returns a new state.
 
-import * as actionTypes from "./todoitems"
+import * as actionTypes from "../actions/actionTypes"
 
 
 const initialState = {

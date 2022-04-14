@@ -1,7 +1,9 @@
 
 import React from 'react';
 import Container from '@mui/material/Container';
-import { makeStyles } from '@mui/material/styles';
+// import { makeStyles } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -13,16 +15,23 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { connect } from 'react-redux'
-import * as actionTypes from '../redux/todo/todoActions';
+import * as actionTypes from '../store/actions/actionTypes';
 
-const useStyles = makeStyles({
-    container: {
-        padding: 16
-    }
-});
 
-function TodoList({ addtodo, deletetodo, edittodo, setEdit, setTitle, setTodo }) {
-    const classes = useStyles();
+// const useStyles = makeStyles({
+//     container: {
+//         padding: 16
+//     }
+// });
+
+const theme = createTheme({
+container: {
+    padding: 16,
+}
+  })
+
+function TodoList({ todoList, deletetodo, setEdit, setTitle, setTodo }) {
+    // const classes = useStyles();
 
     const handleEdit = (item) => {
         setTitle(item.value);
@@ -35,13 +44,13 @@ function TodoList({ addtodo, deletetodo, edittodo, setEdit, setTitle, setTodo })
         deletetodo();
     }
     return (
-        <Container className={classes.container} maxWidth="md">
-            {!addtodo.length
-                ?
-                <Typography variant="h6" color="error">No Data to display</Typography>
-                :
-                (<List>
-                    {addtodo.map(item => {
+        <ThemeProvider theme={theme}>
+ <Container  maxWidth="md">
+            <List>
+                    {
+                    todoList
+                    &&
+                    todoList.map((item) => {
                         return (
                             <ListItem key={item.id} button>
                                 <ListIcon>
@@ -60,24 +69,26 @@ function TodoList({ addtodo, deletetodo, edittodo, setEdit, setTitle, setTodo })
                             </ListItem>
                         )
                     })}
-                </List>)
-            }
+                 </List>
+            
         </Container>
+        </ThemeProvider>
+       
     )
 
 }
 const mapStateToProps = (state) => {
     return {
-        addtodo: state.items
+        todoList: state.items
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setTitle: (title) => dispatch(actionTypes.setTitle(title)),
-        setTodo: (item) => dispatch(actionTypes.setTodo(item)),
-        deletetodo: (item) => dispatch(actionTypes.deletetodo(item)),
-        setEdit: () => dispatch(actionTypes.setEdit()),
+        setTitle: (title) => dispatch(actionTypes.SET_TITLE(title)),
+        setTodo: (item) => dispatch(actionTypes.SET_TODO(item)),
+        deletetodo: (item) => dispatch(actionTypes.DELETE_TODO(item)),
+        setEdit: () => dispatch(actionTypes.SET_EDIT()),
     }
 }
 

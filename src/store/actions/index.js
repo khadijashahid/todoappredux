@@ -1,4 +1,4 @@
-import * as actionTypes from  "./todoitems"
+import * as actionTypes from  "./actionTypes"
 
 // define the action creator which defines the type.
  export const addtodo = () => {
