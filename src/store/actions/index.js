@@ -23,6 +23,7 @@ export const deletetodo = (todo) => {
 
 
 export const setTitle = (title) => {
+    console.log("title me", title)
     return{ 
         type: actionTypes.SET_TITLE, 
         title: title 

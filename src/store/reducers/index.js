@@ -20,6 +20,7 @@ case actionTypes.ADD_TODO:
         id: Date.now(),
         value: state.title,
     }
+    console.log("newtodo", newtodo)
     return{
         ...state,
         todos: state.todos.concat(newtodo),
